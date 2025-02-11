@@ -1,0 +1,23 @@
+class Solution:
+    def removeOccurrences(self, s: str, part: str) -> str:
+        m = len(part)
+        lps = [0] * m
+        j = 0
+        for i in range(1, m):
+            while j > 0 and part[i] != part[j]:
+                j = lps[j - 1]
+            if part[i] == part[j]:
+                j += 1
+                lps[i] = j
+        stack = []
+        for ch in s:
+            cur = stack[-1][1] if stack else 0
+            while cur > 0 and part[cur] != ch:
+                cur = lps[cur - 1]
+            if part[cur] == ch:
+                cur += 1
+            stack.append((ch, cur))
+            if cur == m:
+                for _ in range(m):
+                    stack.pop()
+        return "".join(c for c, _ in stack)
