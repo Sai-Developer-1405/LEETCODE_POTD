@@ -1,0 +1,46 @@
+class Solution:
+    from collections import defaultdict
+    def maximumSum(self, nums: List[int]) -> int:
+        counts = defaultdict(list)
+        ans = []
+        final_ans = []
+        temp_ans = []
+        curr = 0
+        for i in nums:
+            my_string = str(i)
+            ans.append(my_string)
+        left = 0
+        while left < len(nums):
+            for right in ans[left]:
+                curr += int(right)
+            if curr in counts:
+                counts[curr].append(left)
+            else:
+                counts[curr].append(left)
+            curr = 0
+            left += 1
+        ans.clear()
+        for key, value in counts.items():
+            if len(value) > 1:
+                ans.append(counts[key]) 
+        k = 0
+        i = 0
+        while i < len(ans):
+            curr = 0
+            if len(ans[k]) == 2:
+                for element in ans[k]:
+                    curr += nums[element]
+            elif len(ans[k]) > 2:
+                temp_ans.clear()
+                for element in ans[k]:
+                    temp_ans.append(nums[element])
+                sorted_ans = sorted(temp_ans, reverse=True)
+                for p in range(2):
+                    print(sorted_ans[p])
+                    curr += sorted_ans[p]
+            final_ans.append(curr)
+            k += 1
+            i += 1
+        if final_ans:
+            return max(final_ans)
+        return -1
