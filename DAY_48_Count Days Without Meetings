@@ -1,0 +1,14 @@
+class Solution:
+    def countDays(self, days: int, meetings: List[List[int]]) -> int:
+        meetings.sort()
+        n = len(meetings)
+        x,y = meetings[0][0], meetings[0][1]
+        ans  = x-1
+        for i in range(1,n):
+            if y < meetings[i][0]:
+                ans+=(meetings[i][0]-y-1)
+            y  = max(meetings[i][1], y)
+        ans +=days-y
+        return ans
+
+        
