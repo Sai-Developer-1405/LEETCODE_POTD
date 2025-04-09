@@ -1,0 +1,14 @@
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+        notK = set()
+        ops = 0
+        for n in nums:
+            if n < k:
+                return -1
+
+            if n not in notK and n>k:
+                notK.add(n)
+                ops+=1
+
+
+        return ops
