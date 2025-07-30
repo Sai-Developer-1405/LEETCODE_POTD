@@ -1,0 +1,11 @@
+class Solution:
+    def longestSubarray(self, nums: List[int]) -> int:
+        max_val = max(nums)
+        streak = max_streak = 0
+        for num in nums:
+            if num == max_val:
+                streak += 1
+                max_streak = max(max_streak, streak)
+            else:
+                streak = 0
+        return max_streak
