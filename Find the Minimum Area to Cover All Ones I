@@ -1,0 +1,19 @@
+class Solution:
+    def minimumArea(self, grid: List[List[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+
+        top = row
+        left = col
+        bottom = -1
+        right = -1
+
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == 1:
+                    top = min(top, i)
+                    bottom = max(bottom, i)
+                    left = min(left, j)
+                    right = max(right, j)
+
+        return (bottom - top + 1) * (right - left + 1)
