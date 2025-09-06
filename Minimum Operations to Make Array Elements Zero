@@ -1,0 +1,22 @@
+class Solution(object):
+    def minOperations(self, queries):
+        """
+        :type queries: List[List[int]]
+        :rtype: int
+        """
+        a=0
+        for q in queries:
+            l,r=q # assigning the left and right of the range
+            t=0 #the total number of steps for this query
+            ln=1 #block start from the left
+            ln2=1 #steps count
+            while ln<=r:
+                s=max(l,ln)
+                e=min(r,ln*4-1)
+                if e>=s:
+                    t+= (e-s+1)*ln2
+                ln*= 4
+                ln2+=1
+            a+=(t//2)+(t%2) #total number of steps in this query ceil without ceil
+        return a
+        
