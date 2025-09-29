@@ -1,0 +1,13 @@
+class Solution:
+    def minScoreTriangulation(self, values: List[int]) -> int:
+        @cache
+        def dp(start: int, end: int) -> int:
+            if(end - start < 2):
+                return 0;
+            res = 10**18
+            for t in range(start+1, end):
+                res = min(res, values[start] * values[t] * values[end]
+                            + dp(start, t) + dp(t, end))
+            return res
+
+        return dp(0, len(values)-1)
