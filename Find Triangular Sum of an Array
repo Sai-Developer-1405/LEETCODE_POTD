@@ -1,0 +1,14 @@
+class Solution(object):
+    def triangularSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)  # Getting the length of the array
+        
+        for _ in range(n-1):  # We run the loop (n-1) times
+            for i in range(len(nums)-1):  # Update all adjacent pairs
+                nums[i] = (nums[i] + nums[i+1]) % 10
+            nums.pop()  # Remove the last element after each level
+        
+        return nums[0]  # Return the only remaining element (the peak!)
