@@ -1,0 +1,23 @@
+import heapq
+
+class Solution:
+    def swimInWater(self, grid):
+        n = len(grid)
+        m = len(grid[0])
+        directions = [(0,1), (0,-1), (1,0), (-1,0)]
+        
+        pq = [(grid[0][0], 0, 0)]
+        visited = [[False]*m for _ in range(n)]
+        
+        while pq:
+            time, x, y = heapq.heappop(pq)
+            if visited[x][y]:
+                continue
+            visited[x][y] = True
+            if x == n - 1 and y == m - 1:
+                return time
+            for dx, dy in directions:
+                cx, cy = x + dx, y + dy
+                if 0 <= cx < n and 0 <= cy < m and not visited[cx][cy]:
+                    heapq.heappush(pq, (max(time, grid[cx][cy]), cx, cy))
+        return -1
