@@ -1,0 +1,44 @@
+class Solution:
+    def maxKDivisibleComponents(self, n: int, edges: List[List[int]], values: List[int], k: int) -> int:
+        """
+        Find maximum number of components when splitting a tree
+        where each component's sum is divisible by k
+        
+        :type n: int - number of nodes
+        :type edges: List[List[int]] - tree edges
+        :type values: List[int] - node values
+        :type k: int - divisor
+        :rtype: int - maximum components
+        """
+        h = defaultdict(list)  # adjacency list for tree
+        for i, j in edges:
+            h[i].append(j)
+            h[j].append(i)
+        
+        r = 0  # result: count of valid components
+        
+        def dfs(cur, parent):
+            """
+            DFS to calculate subtree sums and count valid splits
+            cur = current node
+            parent = parent node (to avoid revisiting)
+            returns: subtree sum modulo k
+            """
+            t = values[cur]  # start with current node's value
+            
+            # 🔄 EXPLORE ALL CHILDREN
+            for child in h[cur]:
+                if child != parent:  # avoid going back to parent
+                    t += dfs(child, cur)  # add child's subtree sum
+            
+            # 🎯 CHECK DIVISIBILITY: Can we split here?
+            if t % k == 0:
+                nonlocal r
+                r += 1  # found a valid component!
+                return 0  # "cut" this component, don't pass sum up
+            
+            return t  # pass sum to parent
+        
+        # 🚀 START DFS from node 0
+        dfs(0, -1)
+        return r
